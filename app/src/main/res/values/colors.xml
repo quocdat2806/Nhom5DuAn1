@@ -43,9 +43,7 @@
     <color name="tran_parent">#66000000</color>
 
     <color name="black">#FF000000</color>
-
     <color name="xam">#4A4545</color>
-
     <color name="red">#F80A0A</color>
     <color name="org">#FF8C00</color>
     <color name="green">#00FF7F</color>
@@ -55,4 +53,6 @@
     <color name="del_text">#696969</color>
     <color name="no_del">#FF6347</color>
     <color name="traspr">#99FFCC</color>
+    <color name="mau1">#FF6347</color>
+    <color name="mau2">#99FFCC</color>
 </resources>
