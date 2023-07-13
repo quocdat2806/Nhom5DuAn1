@@ -192,6 +192,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 tv_Pizza.setBackground(getResources().getDrawable(R.drawable.cs_category_checked));
             }
             getListFoods("pizza");
+            // pizza
 
         } else if (id == R.id.tv_banh_mi) {
             tv_Tat_Ca.setFocusable(false);
@@ -210,6 +211,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             getListFoods("bánh");
 
         } else if (id == R.id.img_notifycation) {
+            // đợi phần làm của hoàn
             startActivity(new Intent(getActivity(), NotifyActivity.class));
         } else if (id == R.id.img_account) {
             Intent intent = new Intent(getActivity(), AccountActivity.class);
