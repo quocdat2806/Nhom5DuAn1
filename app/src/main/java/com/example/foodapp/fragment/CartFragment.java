@@ -39,7 +39,7 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cart_fragment, container, false);
-        return  view;
+        return  view
 
     }
 }

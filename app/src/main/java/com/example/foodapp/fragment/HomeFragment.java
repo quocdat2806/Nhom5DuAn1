@@ -13,7 +13,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapp.MyApplication;
 import com.example.foodapp.R;
-import com.example.foodapp.activity.DetailActicity;
-import com.example.foodapp.adapter.FoodAdapter;
-import com.example.foodapp.modal.Food;
-import com.example.foodapp.utils.Utils;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,100 +28,15 @@ import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment {
 
-    RecyclerView rcv_Home;
-    FoodAdapter foodAdapter;
-    List<Food> list;
-    GridLayoutManager gridLayoutManager;
-    ImageView imgSearch;
-    EditText edt_Search;
-    TextView tv_Tat_Ca, tv_Tra_Sua, tv_Banh_Mi, tv_Pizza, tv_Empty;
-    ImageView img_NotifyCation, img_Account;
-
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
-        unitUi(view);
-        gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        rcv_Home.setLayoutManager(gridLayoutManager);
-        list = new ArrayList<>();
-        //gửi dữ liệu sang bên DetailActivity
-        foodAdapter = new FoodAdapter(new FoodAdapter.IclickDetail() {
-            @Override
-            public void detailFood(Food food) {
-                Intent intent = new Intent(getActivity(), DetailActicity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("food", food);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-        rcv_Home.setAdapter(foodAdapter);
-        getListFoods("");
+        View view=inflater.inflate(R.layout.home_fragment,container,false);
 
-        imgSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchFood();
-            }
-        });
-        edt_Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchFood();
-                    return true;
-                }
-                return false;
-            }
-        });
-        edt_Search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Do nothing
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Do nothing
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String strKey = s.toString().trim();
-                if (strKey.equals("") || strKey.length() == 0) {
-                    list.clear();
-                    if (tv_Tat_Ca.isFocusable()) {
-                        getListFoods("");
-
-                    } else if (tv_Tra_Sua.isFocusable()) {
-                        getListFoods("tra");
-
-                    } else if (tv_Banh_Mi.isFocusable()) {
-                        getListFoods("banh");
-
-                    } else {
-                        getListFoods("pizza");
-                    }
-
-
-                }
-            }
-        });
-        tv_Tat_Ca.setFocusable(true);
-        if (tv_Tat_Ca.isFocusable()) {
-            tv_Tat_Ca.setBackground(getResources().getDrawable(R.drawable.cs_category_checked));
-        }
-        tv_Tat_Ca.setOnClickListener(this::onClick);
-        tv_Tra_Sua.setOnClickListener(this::onClick);
-        tv_Banh_Mi.setOnClickListener(this::onClick);
-        tv_Pizza.setOnClickListener(this::onClick);
-        img_NotifyCation.setOnClickListener(this);
-        img_Account.setOnClickListener(this);
         return view;
     }
+
 
     private void unitUi(View view) {
         imgSearch = view.findViewById(R.id.img_search);
@@ -297,6 +206,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onDestroy();
         Log.e("onDestroy", "onDestroy");
     }
+
 
 
 }
