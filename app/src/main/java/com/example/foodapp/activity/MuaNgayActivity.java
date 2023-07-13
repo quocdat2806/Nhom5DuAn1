@@ -12,10 +12,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.food_app_design.modal.History;
-import com.example.food_app_design.modal.Notify;
 import com.example.foodapp.R;
 import com.example.foodapp.modal.Food;
+import com.example.foodapp.modal.History;
+import com.example.foodapp.modal.Notify;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -59,7 +59,7 @@ public class MuaNgayActivity extends AppCompatActivity {
         img_Plus=findViewById(R.id.img_plus);
         img_Minus=findViewById(R.id.img_minus);
         edt_Phuong_Thuc=findViewById(R.id.edt_phuong_thuc);
-        tv_Dia_Chi=findViewById(R.id.tv_dia_chi);
+//        tv_Dia_Chi=findViewById(R.id.tv_dia_chi);
         tv_Gia_Tien=findViewById(R.id.tv_tong_tien_tat_ca);
         img_food=findViewById(R.id.img_food);
         tv_Dat_Hang=findViewById(R.id.tv_dat_hang_sheet);

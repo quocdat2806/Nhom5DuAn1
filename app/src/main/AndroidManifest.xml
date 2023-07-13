@@ -29,7 +29,6 @@
             </intent-filter>
         </activity>
         <activity
-<<<<<<< HEAD
             android:name=".activity.DetailActicity"
             android:exported="false">
             <meta-data
@@ -42,9 +41,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-=======
-            android:name=".MainActivity"
-            android:exported="true">
+
 
         </activity>
         <activity
@@ -58,10 +55,19 @@
 
         </activity>
         <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
             android:name=".activity.NotifyActivity"
             android:exported="true">
 
->>>>>>> login
+        </activity>
+        <activity
+            android:name=".activity.AccountActivity"
+            android:exported="true">
+
         </activity>
     </application>
 

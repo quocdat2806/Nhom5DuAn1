@@ -23,7 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapp.MyApplication;
 import com.example.foodapp.R;
+import com.example.foodapp.activity.AccountActivity;
 import com.example.foodapp.activity.DetailActicity;
+import com.example.foodapp.activity.NotifyActivity;
 import com.example.foodapp.adapter.FoodAdapter;
 import com.example.foodapp.modal.Food;
 import com.example.foodapp.utils.Utils;
