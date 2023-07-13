@@ -2,7 +2,9 @@ package com.example.foodapp.modal;
 
 import java.io.Serializable;
 
-public class Food implements Serializable {
+
+
+public class Food  implements Serializable {
     private int id;
     private String title;
     private String image;
