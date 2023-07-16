@@ -52,6 +52,7 @@ public class CartFragment extends Fragment {
     int userId;
     SharedPreferences sharedPreferences;
     int total=0;
+    int total_new=0;
     private BottomSheetBehavior bottomSheetBehavior;
     RelativeLayout layout_Bottom_Sheet;
     TextView tv_Ten,tv_So_Luong,tv_Tong_Tien_Tat_Ca;
@@ -151,16 +152,24 @@ public class CartFragment extends Fragment {
                                //code delete solution
                                reference.child(food.getIdDelete()+"").removeValue();
                                list.remove(position);
+//                            int   vitri = list.get(position);
                                cartAdapter.notifyDataSetChanged();
-                               total=total-(food.getPrice()*food.getAmountBuy());
-                               tv_Tong_Tien.setText("Tổng Tiền"+" "+total+"VND");
-                               if(list.isEmpty()){
-                                   tv_Empty.setVisibility(View.VISIBLE);
+                               // Cập nhật tổng tiền
+                               if (food.getDiscount() != 0) {
+                                   // nếu giảm giá thì lấy tổng tiền * số lượng
+                                   total -= food.totalMoney() * food.getAmountBuy();
+                               } else {
+                                   total -= food.getPrice() * food.getAmountBuy();
                                }
-                               if(total==0){
-                                   tv_Tong_Tien.setText("000000VND");
-                                   tv_Dat_Hang.setEnabled(false);
-                                   tv_Dat_Hang.setBackground(getResources().getDrawable(R.drawable.cs_huy_bo));
+                               //ề Kiểm tra nếu tổng tiền âm, đặt tổng tin mới là 0
+                               if (total < 0) {
+                                   total = 0;
+                               }
+                               tv_Tong_Tien.setText("Tổng Tiền: " + total + " VND");
+
+                               // Hiển thị thông báo nếu danh sách rỗng
+                               if (list.isEmpty()) {
+                                   tv_Empty.setVisibility(View.VISIBLE);
                                }
                                Toast.makeText(getActivity(), "Xóa Sản Phẩm Thành Công", Toast.LENGTH_SHORT).show();
                            }
@@ -199,24 +208,31 @@ public class CartFragment extends Fragment {
         super.onStop();
     }
 
+
+    //dat hang
     private  void getInformation(){
+        // time
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aaa");
         String time;
+        // dinh dang time thang chuoi
         time=("" + sdf3.format(date));
         Random random=new Random(1000000000);
         for(int i=0;i<list.size();i++){
           int random_Id=random.nextInt(1000000000);
-          quantityHistory++;
-          quantityNotify++;
+          quantityHistory++;//////
+          quantityNotify++;///////
           firebaseDatabase_Notify=FirebaseDatabase.getInstance();
-          reference_Notify=firebaseDatabase_Notify.getReference("list notify");
+          reference_Notify = firebaseDatabase_Notify.getReference("list notify");
           History history=new History(String.valueOf(random_Id),ten,sdt,diaChi,list.get(i).getAmountBuy(),list.get(i).getTitle(),time ,list.get(i).getPrice()*list.get(i).getAmountBuy(),phuongThuc,userId );
+
           reference_History.child(quantityHistory+"").setValue(history);
-          SharedPreferences.Editor editor= sharedPreferences.edit();
+          /////
+          SharedPreferences.Editor editor= sharedPreferences.edit();// lu vao trong may
           editor.putInt("quantityHistory",quantityHistory);
           editor.putInt("quantityNotify",quantityNotify);
+
           Notify notify=new Notify(quantityNotify,"Bạn vừa đặt hàng"+" "+list.get(i).getTitle(),time,userId);
           reference_Notify.child(quantityNotify+"").setValue(notify);
           editor.apply();
@@ -238,13 +254,16 @@ public class CartFragment extends Fragment {
                 if (food == null || list == null || cartAdapter == null) {
                     return;
                 }
+
                 if(food.getUserId()==userId){
                     list.add(0, food);
+                    // giaam gia
                     if(food.getDiscount()!=0){
                         total+=food.totalMoney()*food.getAmountBuy();
                     }else {
                         total+=food.getPrice()*food.getAmountBuy();
                     }
+
                     tv_Tong_Tien.setText("Tổng Tiền"+" "+total);
                     tv_Dat_Hang.setEnabled(true);
                     tv_Dat_Hang.setClickable(true);
@@ -261,19 +280,6 @@ public class CartFragment extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//                Food food = dataSnapshot.getValue(Food.class);
-//                if (food == null || list == null || list.isEmpty() || cartAdapter == null) {
-//                    return;
-//                }
-//                for (Food foodDelete : list) {
-//                    if (food.getId() == foodDelete.getId()) {
-//                        list.remove(foodDelete);
-//                        break;
-//                    }
-//                }
-             //   cartAdapter.setData(list);
-
-
             }
 
             @Override
