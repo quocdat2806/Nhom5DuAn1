@@ -130,7 +130,7 @@ public class MuaNgayActivity extends AppCompatActivity {
             quantityHistory++;
             quantityNotify++;
             food.setAmountBuy(amount);
-            History history=new History(String.valueOf(random_Id),ten,sdt,diaChi,food.getAmountBuy(),food.getTitle(),time ,food.getPrice()*food.getAmountBuy(),phuongThuc,userId );
+            History history=new History(String.valueOf(random_Id),ten,sdt,diaChi,food.getAmountBuy(),food.getTitle(),time ,food.getPrice()*food.getAmountBuy(),phuongThuc,userId,0 );
             reference_History.child(quantityHistory+"").setValue(history);
             SharedPreferences.Editor editor= sharedPreferences.edit();
             Notify notify=new Notify(quantityNotify,"Bạn vừa đặt hàng"+" "+food.getTitle(),time,userId);

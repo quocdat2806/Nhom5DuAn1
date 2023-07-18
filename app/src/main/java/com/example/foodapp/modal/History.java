@@ -11,11 +11,12 @@ public class History {
     private  int tongTien;
     private  String thanhToan;
     private int userId;
+    private  int status;
 
     public History() {
     }
 
-    public History(String maDonHang, String hoTen, String soDienThoai, String diaChiNhan, int soLuongMua, String thucDon, String ngayDatHang, int tongTien, String thanhToan, int userId) {
+    public History(String maDonHang, String hoTen, String soDienThoai, String diaChiNhan, int soLuongMua, String thucDon, String ngayDatHang, int tongTien, String thanhToan, int userId, int status) {
         this.maDonHang = maDonHang;
         this.hoTen = hoTen;
         this.soDienThoai = soDienThoai;
@@ -26,6 +27,7 @@ public class History {
         this.tongTien = tongTien;
         this.thanhToan = thanhToan;
         this.userId = userId;
+        this.status = status;
     }
 
     public String getMaDonHang() {
@@ -106,5 +108,13 @@ public class History {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
