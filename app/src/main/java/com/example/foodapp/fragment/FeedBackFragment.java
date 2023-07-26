@@ -30,7 +30,7 @@ public class FeedBackFragment extends Fragment {
     EditText edt_Ten, edt_Sdt, edt_Email, edt_Binh_Luan;
     TextView tv_Gui_Phan_Hoi;
     String ten, sdt, email, binhLuan;
-    ImageView img_Back;
+
 
     private FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -49,7 +49,7 @@ public class FeedBackFragment extends Fragment {
         edt_Email = view.findViewById(R.id.edt_email);
         edt_Binh_Luan = view.findViewById(R.id.edt_binh_luan);
         tv_Gui_Phan_Hoi = view.findViewById(R.id.tv_gui_phan_hoi);
-        img_Back = view.findViewById(R.id.img_back);
+
 
         tv_Gui_Phan_Hoi.setOnClickListener(new View.OnClickListener() {
             @Override

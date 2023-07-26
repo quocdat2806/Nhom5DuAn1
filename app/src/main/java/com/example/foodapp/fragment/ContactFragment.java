@@ -27,7 +27,7 @@ public class ContactFragment extends Fragment {
     GridLayoutManager gridLayoutManager;
     RecyclerView rcv_Contact;
     ContactLogoAdapter contactLogoAdapter;
-    ImageView img_Back;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,13 +41,7 @@ public class ContactFragment extends Fragment {
         gridLayoutManager=new GridLayoutManager(getActivity(),3);
         rcv_Contact.setLayoutManager(gridLayoutManager);
         rcv_Contact.setAdapter(contactLogoAdapter);
-        img_Back=view.findViewById(R.id.img_back);
-        img_Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-            }
-        });
+
         setData();
 
         return view;

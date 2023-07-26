@@ -1,10 +1,13 @@
 package com.example.foodapp.adapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -13,7 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapp.R;
 import com.example.foodapp.modal.History;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHoler> {
@@ -39,10 +47,48 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         if(history==null){
             return;
         }
-        if (history.getStatus()==2 || history.getStatus()==3){
+        if (history.getStatus()==2 || history.getStatus()==3 || history.getStatus()==4){
             holder.btn_huydon.setVisibility(View.INVISIBLE);
 
         }
+        holder.btn_huydon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Bạn có muốn hủy đơn hay không?");
+
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("status",4);
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("list history");
+                        ref.child(""+history.getMaDonHang())
+                                .updateChildren(hashMap)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(v.getContext(), "Đã hủy đơn thành công ", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(v.getContext(), "Đã hủy đơn thất bại ", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+            }
+        });
 
         holder.tv_Ma_Don_Hang.setText(history.getMaDonHang());
         holder.tv_Ten.setText(history.getHoTen());
