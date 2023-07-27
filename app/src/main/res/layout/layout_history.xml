@@ -226,7 +226,7 @@
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatButton
                 android:background="@color/red"
-                android:id="@+id/btn_huydon"
+                android:id="@+id/btn_chucnang"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_marginStart="18dp"
