@@ -1,118 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="50dp"
         android:background="@color/orange"
-        android:layout_height="50dp">
-        <ImageView
-            android:id="@+id/img_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_back"/>
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:textStyle="bold"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:text="Thanh Toán An Toàn"
             android:textColor="#fff"
             android:textSize="20sp"
-
-            android:gravity="center"
-            android:layout_marginEnd="20dp"
-            android:background="@color/orange"
-            android:text="Thanh Toán An Toàn"/>
+            android:textStyle="bold" />
     </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="CHI TIẾT GIAO DỊCH"
-        android:textSize="20sp"
         android:textColor="@color/black"
-        />
-    <LinearLayout
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
+        android:textSize="20sp" />
 
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <ImageView
                         android:id="@+id/img_food"
                         android:layout_width="140dp"
-                        android:layout_height="100dp"/>
+                        android:layout_height="100dp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <LinearLayout
-                android:layout_marginStart="5dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="2">
+                android:layout_marginStart="5dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_ten"
                     android:layout_width="match_parent"
-                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
                     android:padding="6dp"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <TextView
+                    android:id="@+id/tv_tong_tien_tat_ca"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="6dp"
                     android:textColor="@color/orange"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:id="@+id/tv_tong_tien_tat_ca"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                    android:padding="6dp"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:padding="6dp">
+
                     <ImageView
-                        android:src="@drawable/ic_minus"
                         android:id="@+id/img_minus"
                         android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:background="@drawable/cs_bg_add_minus"
-                        android:layout_height="20dp"/>
+                        android:src="@drawable/ic_minus" />
+
                     <TextView
-                        android:layout_marginStart="15dp"
-                        android:layout_width="20dp"
                         android:id="@+id/tv_amount"
-                        android:textStyle="bold"
-                        android:textSize="15sp"
-                        android:textColor="@color/black"
-                        android:gravity="center"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="15dp"
                         android:background="@drawable/cs_amount"
-                        android:layout_height="20dp"/>
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
                     <ImageView
                         android:id="@+id/img_plus"
-                        android:layout_marginStart="15dp"
                         android:layout_width="20dp"
-                        android:src="@drawable/ic_add"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="15dp"
                         android:background="@drawable/cs_bg_add_minus"
-                        android:layout_height="20dp"/>
+                        android:src="@drawable/ic_add" />
                 </LinearLayout>
 
 
@@ -124,101 +127,105 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Phương Thức Thanh Toán"/>
-        <EditText
+            android:text="Phương Thức Thanh Toán" />
+
+        <Spinner
+            android:id="@+id/phuongthucthanhtoan_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:padding="10dp"
-            android:text="Tiền Mặt"
-            android:clickable="false"
-            android:id="@+id/edt_phuong_thuc"
-            android:layout_width="match_parent"
-            android:background="@drawable/cs_edittext"
-            android:layout_height="wrap_content"/>
+            android:background="@drawable/cs_edittext" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Họ Và Tên (*)"/>
+            android:text="Họ Và Tên (*)" />
+
         <EditText
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="10dp"
             android:id="@+id/edt_ten"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/cs_edittext"
-            android:layout_height="wrap_content"/>
+            android:padding="10dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
 
-            android:text="Số Điện Thoại"/>
+            android:text="Số Điện Thoại" />
+
         <EditText
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="10dp"
             android:id="@+id/edt_sdt"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/cs_edittext"
-            android:layout_height="wrap_content"/>
+            android:padding="10dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
 
-            android:text="Địa Chỉ Giao Hàng"/>
+            android:text="Địa Chỉ Giao Hàng" />
+
         <EditText
+            android:id="@+id/edt_dia_chi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:padding="10dp"
-            android:id="@+id/edt_dia_chi"
             android:background="@drawable/cs_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="0dp"
-                android:paddingTop="8dp"
-                android:layout_marginStart="15dp"
-                android:layout_weight="1"
-                android:text="Hủy Bỏ"
-                android:paddingBottom="8dp"
-                android:layout_marginEnd="15dp"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:id="@+id/tv_huy_bo_sheet"
-                android:textColor="@color/black"
-                android:gravity="center"
+            android:padding="10dp" />
 
-                android:background="@drawable/cs_huy_bo"
-                android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
             <TextView
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:layout_marginEnd="15dp"
+                android:id="@+id/tv_huy_bo_sheet"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="Đặt Hàng"
-                android:id="@+id/tv_dat_hang_sheet"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/cs_huy_bo"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Hủy Bỏ"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_dat_hang_sheet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
                 android:background="@drawable/cs_them_gio_hang"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="20sp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Đặt Hàng"
                 android:textColor="#fff"
-                android:layout_height="wrap_content"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

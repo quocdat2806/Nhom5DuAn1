@@ -1,7 +1,7 @@
 package com.example.foodapp.modal;
 
 public class Notify {
-    private  int id;
+    private  String id;
     private String title;
     private String times;
     private int userId;
@@ -9,18 +9,18 @@ public class Notify {
     public Notify() {
     }
 
-    public Notify(int id, String title, String times, int userId) {
+    public Notify(String id, String title, String times, int userId) {
         this.id = id;
         this.title = title;
         this.times = times;
         this.userId = userId;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
