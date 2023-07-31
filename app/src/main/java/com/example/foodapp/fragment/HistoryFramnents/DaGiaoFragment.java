@@ -55,6 +55,14 @@ public class DaGiaoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_da_giao, container, false);
 
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         rcv_History=view.findViewById(R.id.rcv_history_da_gh);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
         rcv_History.setLayoutManager(linearLayoutManager);
@@ -69,9 +77,23 @@ public class DaGiaoFragment extends Fragment {
         firebaseDatabase=FirebaseDatabase.getInstance();
         reference=firebaseDatabase.getReference("list history");
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        sharedPreferences=getActivity().getSharedPreferences("info",getActivity().MODE_PRIVATE);
+        userIdd=sharedPreferences.getInt("userId",0);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        list.clear();
+
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 History userId = snapshot.getValue(History.class);
                 if (userId == null || list == null || historyAdapter == null) {
                     return;
@@ -82,6 +104,7 @@ public class DaGiaoFragment extends Fragment {
                 }else {
                     return;
                 }
+                historyAdapter.notifyDataSetChanged();
                 historyAdapter.setData(list);
             }
 
@@ -105,12 +128,5 @@ public class DaGiaoFragment extends Fragment {
 
             }
         });
-        return view;
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        sharedPreferences=getActivity().getSharedPreferences("info",getActivity().MODE_PRIVATE);
-        userIdd=sharedPreferences.getInt("userId",0);
     }
 }
