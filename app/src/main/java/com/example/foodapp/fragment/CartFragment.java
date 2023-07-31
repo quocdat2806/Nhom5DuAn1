@@ -51,10 +51,10 @@ public class CartFragment extends Fragment {
     DatabaseReference reference_History;
     FirebaseDatabase firebaseDatabase_Notify;
     DatabaseReference reference_Notify;
-    TextView tv_Tong_Tien, tv_Dat_Hang, tv_Empty;
+    public static   TextView tv_Tong_Tien,tv_Dat_Hang,tv_Empty;
     int userId;
     SharedPreferences sharedPreferences;
-    int total = 0;
+    public static int total=0;
     private BottomSheetBehavior bottomSheetBehavior;
     RelativeLayout layout_Bottom_Sheet;
     TextView tv_Ten, tv_So_Luong, tv_Tong_Tien_Tat_Ca;
