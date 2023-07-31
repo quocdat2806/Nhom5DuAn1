@@ -76,23 +76,6 @@ public class HistoryFragment extends Fragment {
                     break;
             }
         }).attach();
-        // thay đổi màu chữ
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                tabLayout.setTabTextColors(Color.WHITE,Color.BLACK);
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//                tabLayout.setTabTextColors(Color.WHITE,Color.WHITE);
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
 
     }
 

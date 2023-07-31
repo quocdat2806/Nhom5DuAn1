@@ -1,5 +1,7 @@
 package com.example.foodapp.fragment.HistoryFramnents;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,10 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodapp.R;
 import com.example.foodapp.adapter.HistoryAdapter;
 import com.example.foodapp.modal.History;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -54,6 +60,15 @@ public class ChoXacNhanFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cho_xac_nhan, container, false);
 
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         rcv_History=view.findViewById(R.id.rcv_history_cho_xn);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
         rcv_History.setLayoutManager(linearLayoutManager);
@@ -68,9 +83,23 @@ public class ChoXacNhanFragment extends Fragment {
         firebaseDatabase=FirebaseDatabase.getInstance();
         reference=firebaseDatabase.getReference("list history");
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        sharedPreferences=getActivity().getSharedPreferences("info",getActivity().MODE_PRIVATE);
+        userIdd=sharedPreferences.getInt("userId",0);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        list.clear();
+
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 History userId = snapshot.getValue(History.class);
                 if (userId == null || list == null || historyAdapter == null) {
                     return;
@@ -81,6 +110,7 @@ public class ChoXacNhanFragment extends Fragment {
                 }else {
                     return;
                 }
+                historyAdapter.notifyDataSetChanged();
                 historyAdapter.setData(list);
             }
 
@@ -104,13 +134,5 @@ public class ChoXacNhanFragment extends Fragment {
 
             }
         });
-
-        return view;
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        sharedPreferences=getActivity().getSharedPreferences("info",getActivity().MODE_PRIVATE);
-        userIdd=sharedPreferences.getInt("userId",0);
     }
 }
