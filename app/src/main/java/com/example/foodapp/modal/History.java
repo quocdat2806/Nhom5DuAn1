@@ -13,7 +13,7 @@ public class History {
     private int userId;
     private  int status;
 
-    public History() {
+    public History(String s, String ten, String sdt, String diaChi, int amountBuy, String title, String time, int i, String phuongThuc, int userId, int i1) {
     }
 
     public History(String maDonHang, String hoTen, String soDienThoai, String diaChiNhan, int soLuongMua, String thucDon, String ngayDatHang, int tongTien, String thanhToan, int userId, int status) {
