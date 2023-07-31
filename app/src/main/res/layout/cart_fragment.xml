@@ -5,9 +5,5 @@
     >
     <include layout="@layout/layout_content_pay"/>
     <include layout="@layout/layout_sheet_pay"/>
-
-  
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>

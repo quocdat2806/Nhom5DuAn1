@@ -6,22 +6,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import android.widget.Toast;
-
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.foodapp.R;
-
-import com.example.foodapp.fragment.CartFragment;
 import com.example.foodapp.modal.Food;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import com.example.foodapp.modal.Food;
-
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -30,14 +20,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     List<Food>list;
 
     public IClick clickItem;
-    int gia = 0 ;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference reference;
-
-
-    public IClick clickItem;
     int amount;
-
     public CartAdapter(IClick clickItem) {
         this.clickItem = clickItem;
     }
@@ -50,10 +33,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         notifyDataSetChanged();
 
     }
-
-    int amount= 0;
-
-
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -69,81 +48,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         }
         int discount=food.getDiscount();
         if(discount==0){
-
-            holder.tv_Price.setText("Giá : "+food.getPrice()+"");
-        }else {
-            holder.tv_Price.setText("Giá : "+food.totalMoney()+"");
-        }
-        Picasso.get().load(food.getImage()).into(holder.img_Food);
-        holder.tv_Title.setText(food.getTitle());
-        holder.tv_Amount.setText(+food.getAmountBuy()+"");
-        holder.img_Minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                amount = list.get(holder.getAdapterPosition()).getAmountBuy();
-                if (amount>1){
-                    --amount;
-                    list.get(holder.getAdapterPosition()).setAmountBuy(amount);
-                    holder.tv_Amount.setText(list.get(holder.getAdapterPosition()).getAmountBuy()+"");
-                    if(list.get(holder.getAdapterPosition()).getDiscount()!=0){
-                        if(discount==0){
-                            holder.tv_Price.setText("Giá : "+food.getPrice()*amount);
-                        }else {
-                            holder.tv_Price.setText("Giá : "+food.totalMoney()*amount);
-                        }
-                        CartFragment.total = CartFragment.total - list.get(holder.getAdapterPosition()).totalMoney();
-
-
-                    }   else {
-                        CartFragment.total = CartFragment.total - list.get(holder.getAdapterPosition()).getPrice();
-
-                    }
-                    CartFragment.tv_Tong_Tien.setText("Tổng Tiền : "+CartFragment.total+"VND");
-                    firebaseDatabase = FirebaseDatabase.getInstance();
-                    reference=firebaseDatabase.getReference("list cart");
-                    String itemId = String.valueOf(list.get(position).getIdDelete());
-                    reference.child(itemId).child("amountBuy").setValue(amount);
-                    if(discount==0){
-                        reference.child(itemId).child("price").setValue(list.get(position).getPrice()*amount);
-                    }else {
-                        reference.child(itemId).child("price").setValue(list.get(position).totalMoney()*amount);
-                    }
-                }else {
-                    Toast.makeText(v.getContext(), "không thể thực hiện", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        holder.img_Plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                amount = list.get(holder.getAdapterPosition()).getAmountBuy();
-                ++amount;
-                list.get(holder.getAdapterPosition()).setAmountBuy(amount);
-                holder.tv_Amount.setText(list.get(holder.getAdapterPosition()).getAmountBuy()+"");
-                if(list.get(holder.getAdapterPosition()).getDiscount()!=0){
-                    if(discount==0){
-                        holder.tv_Price.setText("Giá : "+food.getPrice()*amount);
-                    }else {
-                        holder.tv_Price.setText("Giá : "+food.totalMoney()*amount);
-                    }
-                    CartFragment.total = CartFragment.total + list.get(holder.getAdapterPosition()).totalMoney();
-                }   else {
-                    CartFragment.total = CartFragment.total + list.get(holder.getAdapterPosition()).getPrice();
-                }
-                CartFragment.tv_Tong_Tien.setText("Tổng Tiền : "+CartFragment.total+"VND");
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                reference=firebaseDatabase.getReference("list cart");
-                String itemId = String.valueOf(list.get(position).getIdDelete());
-                reference.child(itemId).child("amountBuy").setValue(amount);
-                if(discount==0){
-                    reference.child(itemId).child("price").setValue(list.get(position).getPrice()*amount);
-                }else {
-                    reference.child(itemId).child("price").setValue(list.get(position).totalMoney()*amount);
-                }
-            }
-        });
-
-
             Picasso.get().load(food.getImage()).into(holder.img_Food);
             holder.tv_Amount.setText(+food.getAmountBuy()+"");
             holder.tv_Price.setText("Gía"+food.getPrice()+"");
@@ -155,7 +59,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             holder.tv_Title.setText(food.getTitle());
         }
         amount=food.getAmountBuy();
-
         holder.tv_Xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,11 +81,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public  class  CartViewHolder extends RecyclerView.ViewHolder{
         TextView tv_Title,tv_Price,tv_Amount,tv_Xoa;
-
-        ImageView img_Food,img_Plus,img_Minus;
-
         ImageView img_Food;
-
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -191,8 +90,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             tv_Amount=itemView.findViewById(R.id.tv_amount);
             img_Food=itemView.findViewById(R.id.img_food_detail);
             tv_Xoa=itemView.findViewById(R.id.tv_xoa);
-            img_Minus = itemView.findViewById(R.id.img_minus);
-            img_Plus = itemView.findViewById(R.id.img_plus);
         }
     }
 }
