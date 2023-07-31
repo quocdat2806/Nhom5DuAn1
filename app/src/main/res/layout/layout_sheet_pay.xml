@@ -75,13 +75,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Phương Thức Thanh Toán"/>
-            <Spinner
+            <EditText
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
                 android:text="Tiền Mặt"
                 android:clickable="false"
-                android:id="@+id/spinner_phuong_thuc"
+                android:id="@+id/edt_phuong_thuc"
                 android:layout_width="match_parent"
                 android:background="@drawable/cs_edittext"
                 android:layout_height="wrap_content"/>
