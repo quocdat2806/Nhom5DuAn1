@@ -41,13 +41,13 @@ public class ContactFragment extends Fragment {
         gridLayoutManager=new GridLayoutManager(getActivity(),3);
         rcv_Contact.setLayoutManager(gridLayoutManager);
         rcv_Contact.setAdapter(contactLogoAdapter);
-        img_Back=view.findViewById(R.id.img_back);
-        img_Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-            }
-        });
+//        img_Back=view.findViewById(R.id.img_back);
+//        img_Back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getActivity().finish();
+//            }
+//        });
         setData();
 
         return view;

@@ -96,6 +96,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 // Do nothing
             }
 
+
             @Override
             public void afterTextChanged(Editable s) {
                 String strKey = s.toString().trim();

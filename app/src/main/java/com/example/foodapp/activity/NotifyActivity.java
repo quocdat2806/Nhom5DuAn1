@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,56 +36,62 @@ public class NotifyActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference reference;
-    List<Notify>list=new ArrayList<>();
+    List<Notify> list = new ArrayList<>();
     int userIdd;
     SharedPreferences sharedPreferences;
     TextView tv_Empty;
-    public long diff, diffSeconds ,diffMinutes,diffHours;
+    public long diff, diffSeconds, diffMinutes, diffHours;
     public String timeEnd;
     ImageView img_Back;
+    int day = 1;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notify);
-        rcv_Notify=findViewById(R.id.rcv_notify);
-        linearLayoutManager=new LinearLayoutManager(this);
+        rcv_Notify = findViewById(R.id.rcv_notify);
+        linearLayoutManager = new LinearLayoutManager(this);
         rcv_Notify.setLayoutManager(linearLayoutManager);
-        notifyAdapter=new NotifyAdapter(this);
-        tv_Empty=findViewById(R.id.tv_empty);
+        notifyAdapter = new NotifyAdapter(this);
+        tv_Empty = findViewById(R.id.tv_empty);
         rcv_Notify.setAdapter(notifyAdapter);
-        img_Back=findViewById(R.id.img_back);
+        img_Back = findViewById(R.id.img_back);
         img_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        firebaseDatabase= FirebaseDatabase.getInstance();
-        if(list.size()==0){
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        if (list.size() == 0) {
             tv_Empty.setVisibility(View.VISIBLE);
         }
-        reference=firebaseDatabase.getReference("list notify");
+        reference = firebaseDatabase.getReference("list notify");
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Notify notify = snapshot.getValue(Notify.class);
 
+
                 if (notify == null || list == null || notifyAdapter == null) {
                     return;
                 }
-                if(userIdd==(notify.getUserId())){
+                if (userIdd == (notify.getUserId())) {
                     list.add(0, notify);
-                }else {
+                } else {
                     return;
                 }
-                if(list.size()>0){
+                if (list.size() > 0) {
                     tv_Empty.setVisibility(View.GONE);
 
-                }else {
+                } else {
                     tv_Empty.setVisibility(View.VISIBLE);
                 }
+                Notify notify1 = list.get(0);
+
+
                 notifyAdapter.setData(list);
             }
 
@@ -115,17 +122,17 @@ public class NotifyActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        sharedPreferences=getSharedPreferences("info",MODE_PRIVATE);
-        userIdd=sharedPreferences.getInt("userId",0);
+        sharedPreferences = getSharedPreferences("info", MODE_PRIVATE);
+        userIdd = sharedPreferences.getInt("userId", 0);
     }
 
-    public void handlerTimes(String timeStart){
+    public void handlerTimes(String timeStart) {
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aaa");
 //        timeStart=format.format(timeStart);
-        timeEnd=  format.format(date);
-    //        Custom date format
+        timeEnd = format.format(date);
+        //        Custom date format
         Date d1 = null;
         Date d2 = null;
         try {
@@ -134,14 +141,20 @@ public class NotifyActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(d2!=null && d1!=null){
+        if (d2 != null && d1 != null) {
             diff = d2.getTime() - d1.getTime();
 
         }
         // Get msec from each, and subtract.
-         diffSeconds = diff / 1000 % 60;
-         diffMinutes = diff / (60 * 1000) % 60;
-         diffHours = diff / (60 * 60 * 1000);
+        diffSeconds = diff / 1000 % 60;
+        diffMinutes = diff / (60 * 1000) % 60;
+        diffHours = diff / (60 * 60 * 1000);
+    }
+
+    public int setday(int hours) {
+        day = (int) (Math.floor(hours / 24));
+        Toast.makeText(this, "day activity" + day, Toast.LENGTH_SHORT).show();
+        return day;
     }
 }
 
