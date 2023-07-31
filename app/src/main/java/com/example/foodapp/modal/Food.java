@@ -100,6 +100,9 @@ public class Food  implements Serializable {
     public   int totalMoney(){
         return (100-this.discount)*this.price/100;
     }
+    public  int totalMoneyDiscount(){
+        return (100-this.discount)*this.price/100 * this.amountBuy;
+    }
     public int total(){
         return  this.price*this.amountBuy;
     }

@@ -48,11 +48,10 @@ public class CartFragment extends Fragment {
     DatabaseReference reference_History;
     FirebaseDatabase firebaseDatabase_Notify;
     DatabaseReference reference_Notify;
-    TextView tv_Tong_Tien,tv_Dat_Hang,tv_Empty;
+    public static   TextView tv_Tong_Tien,tv_Dat_Hang,tv_Empty;
     int userId;
     SharedPreferences sharedPreferences;
-    int total=0;
-    int total_new=0;
+    public static int total=0;
     private BottomSheetBehavior bottomSheetBehavior;
     RelativeLayout layout_Bottom_Sheet;
     TextView tv_Ten,tv_So_Luong,tv_Tong_Tien_Tat_Ca;
@@ -62,10 +61,10 @@ public class CartFragment extends Fragment {
     int quantityHistory;
     int quantityNotify;
     ImageView img_Back;
-    @Nullable
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.cart_fragment,container,false);
+        View view = inflater.inflate(R.layout.cart_fragment, container, false);
         unitUi(view);
         checkData();
         loadData();
@@ -131,52 +130,53 @@ public class CartFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        return view;
+
+
+        return  view;
+
+
     }
     private  void unitUi(View view){
         firebaseDatabase=FirebaseDatabase.getInstance();
         reference=firebaseDatabase.getReference("list cart");
         cartAdapter=new CartAdapter(new CartAdapter.IClick() {
-           @Override
-           public void delete(Food food, int position) {
-               AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-               builder.setMessage("Bạn Có Muốn Chắc Chắn Xóa Sản Phẩm "+" "+food.getTitle()+"Này Không").setTitle("Xóa")
-                       .setPositiveButton("Không", new DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface dialogInterface, int i) {
-                           }
-                       })
-                       .setNegativeButton("Có", new DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface dialogInterface, int i) {
-                               //code delete solution
-                               reference.child(food.getIdDelete()+"").removeValue();
-                               list.remove(position);
-//                            int   vitri = list.get(position);
-                               cartAdapter.notifyDataSetChanged();
-                               // Cập nhật tổng tiền
-                               if (food.getDiscount() != 0) {
-                                   // nếu giảm giá thì lấy tổng tiền * số lượng
-                                   total -= food.totalMoney() * food.getAmountBuy();
-                               } else {
-                                   total -= food.getPrice() * food.getAmountBuy();
-                               }
-                               //ề Kiểm tra nếu tổng tiền âm, đặt tổng tin mới là 0
-                               if (total < 0) {
-                                   total = 0;
-                               }
-                               tv_Tong_Tien.setText("Tổng Tiền: " + total + " VND");
+            @Override
+            public void delete(Food food, int position) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                builder.setMessage("Bạn Có Muốn Chắc Chắn Xóa Sản Phẩm "+" "+food.getTitle()+"Này Không").setTitle("Xóa")
+                        .setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .setNegativeButton("Có", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //code delete solution
+                                if(food.getDiscount() !=0){
+                                    total = total - food.totalMoneyDiscount();
+                                }else {
+                                    total=total- food.total();
 
-                               // Hiển thị thông báo nếu danh sách rỗng
-                               if (list.isEmpty()) {
-                                   tv_Empty.setVisibility(View.VISIBLE);
-                               }
-                               Toast.makeText(getActivity(), "Xóa Sản Phẩm Thành Công", Toast.LENGTH_SHORT).show();
-                           }
-                       });
-               builder.show();
-           }
-       });
+                                }
+                                tv_Tong_Tien.setText("Tổng Tiền"+" "+total+"VND");
+                                if(list.isEmpty()){
+                                    tv_Empty.setVisibility(View.VISIBLE);
+                                }
+                                if(total==0){
+                                    tv_Tong_Tien.setText("000000VND");
+                                    tv_Dat_Hang.setEnabled(false);
+                                    tv_Dat_Hang.setBackground(getResources().getDrawable(R.drawable.cs_huy_bo));
+                                }
+                                reference.child(food.getIdDelete()+"").removeValue();
+                                list.remove(position);
+                                cartAdapter.notifyDataSetChanged();
+                                Toast.makeText(getActivity(), "Xóa Sản Phẩm Thành Công", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.show();
+            }
+        });
         rcv_Cart=view.findViewById(R.id.rcv_cart);
         tv_Dat_Hang=view.findViewById(R.id.tv_dat_hang);
         layout_Bottom_Sheet=view.findViewById(R.id.layout_bottom_sheet);
@@ -208,35 +208,28 @@ public class CartFragment extends Fragment {
         super.onStop();
     }
 
-
-    //dat hang
     private  void getInformation(){
-        // time
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aaa");
         String time;
-        // dinh dang time thang chuoi
         time=("" + sdf3.format(date));
         Random random=new Random(1000000000);
         for(int i=0;i<list.size();i++){
-          int random_Id=random.nextInt(1000000000);
-          quantityHistory++;//////
-          quantityNotify++;///////
-          firebaseDatabase_Notify=FirebaseDatabase.getInstance();
-          reference_Notify = firebaseDatabase_Notify.getReference("list notify");
-          History history=new History(String.valueOf(random_Id),ten,sdt,diaChi,list.get(i).getAmountBuy(),list.get(i).getTitle(),time ,list.get(i).getPrice()*list.get(i).getAmountBuy(),phuongThuc,userId );
-
-          reference_History.child(quantityHistory+"").setValue(history);
-          /////
-          SharedPreferences.Editor editor= sharedPreferences.edit();// lu vao trong may
-          editor.putInt("quantityHistory",quantityHistory);
-          editor.putInt("quantityNotify",quantityNotify);
-
-          Notify notify=new Notify(quantityNotify,"Bạn vừa đặt hàng"+" "+list.get(i).getTitle(),time,userId);
-          reference_Notify.child(quantityNotify+"").setValue(notify);
-          editor.apply();
-      }
+            int random_Id=random.nextInt(1000000000);
+            quantityHistory++;
+            quantityNotify++;
+            firebaseDatabase_Notify=FirebaseDatabase.getInstance();
+            reference_Notify=firebaseDatabase_Notify.getReference("list notify");
+            History history=new History(String.valueOf(random_Id),ten,sdt,diaChi,list.get(i).getAmountBuy(),list.get(i).getTitle(),time ,list.get(i).getPrice()*list.get(i).getAmountBuy(),phuongThuc,userId,0 );
+            reference_History.child(quantityHistory+"").setValue(history);
+            SharedPreferences.Editor editor= sharedPreferences.edit();
+            editor.putInt("quantityHistory",quantityHistory);
+            editor.putInt("quantityNotify",quantityNotify);
+            Notify notify=new Notify(quantityNotify,"Bạn vừa đặt hàng"+" "+list.get(i).getTitle(),time,userId);
+            reference_Notify.child(quantityNotify+"").setValue(notify);
+            editor.apply();
+        }
     }
     @Override
     public void onStart() {
@@ -254,16 +247,13 @@ public class CartFragment extends Fragment {
                 if (food == null || list == null || cartAdapter == null) {
                     return;
                 }
-
                 if(food.getUserId()==userId){
                     list.add(0, food);
-                    // giaam gia
                     if(food.getDiscount()!=0){
-                        total+=food.totalMoney()*food.getAmountBuy();
+                        total+= food.totalMoneyDiscount();
                     }else {
-                        total+=food.getPrice()*food.getAmountBuy();
+                        total+= food.total();
                     }
-
                     tv_Tong_Tien.setText("Tổng Tiền"+" "+total);
                     tv_Dat_Hang.setEnabled(true);
                     tv_Dat_Hang.setClickable(true);
