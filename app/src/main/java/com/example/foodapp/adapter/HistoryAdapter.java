@@ -106,8 +106,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
         } else if (history.getStatus() == 2 || history.getStatus() == 3) {
             holder.btn_chucnang.setVisibility(View.INVISIBLE);
-            list.remove(holder.getAdapterPosition());
-            notifyDataSetChanged();
+
         } else if (history.getStatus() == 4) {
             holder.btn_chucnang.setText("Đặt lại");
             holder.btn_chucnang.setBackgroundResource(R.color.green);
@@ -118,6 +117,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                     builder.setMessage("Bạn có muốn đặt lại đơn hay không?");
 
+                    long timestamp = System.currentTimeMillis();
                     builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -148,14 +148,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                             SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aaa");
                             String time;
                             time = ("" + sdf3.format(date));
-                            long timestamp = System.currentTimeMillis();
 
                             firebaseDatabase_Notify = FirebaseDatabase.getInstance();
-
                             reference_Notify = firebaseDatabase_Notify.getReference("list notify");
 
                             Notify notify = new Notify("" + timestamp, "Bạn vừa đặt lại đơn hàng" + " " + history.getThucDon(), time, userId);
-
                             reference_Notify.child("" + timestamp).setValue(notify);
                         }
                     });
