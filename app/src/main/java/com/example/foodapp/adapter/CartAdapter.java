@@ -5,27 +5,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.foodapp.R;
+
 import com.example.foodapp.fragment.CartFragment;
 import com.example.foodapp.modal.Food;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import com.example.foodapp.modal.Food;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     List<Food>list;
+
     public IClick clickItem;
     int gia = 0 ;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference reference;
+
+
+    public IClick clickItem;
+    int amount;
+
     public CartAdapter(IClick clickItem) {
         this.clickItem = clickItem;
     }
@@ -38,7 +50,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         notifyDataSetChanged();
 
     }
+
     int amount= 0;
+
+
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,6 +69,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         }
         int discount=food.getDiscount();
         if(discount==0){
+
             holder.tv_Price.setText("Giá : "+food.getPrice()+"");
         }else {
             holder.tv_Price.setText("Giá : "+food.totalMoney()+"");
@@ -127,6 +143,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             }
         });
 
+
+            Picasso.get().load(food.getImage()).into(holder.img_Food);
+            holder.tv_Amount.setText(+food.getAmountBuy()+"");
+            holder.tv_Price.setText("Gía"+food.getPrice()+"");
+            holder.tv_Title.setText(food.getTitle());
+        }else {
+            Picasso.get().load(food.getImage()).into(holder.img_Food);
+            holder.tv_Amount.setText(+food.getAmountBuy()+"");
+            holder.tv_Price.setText("Gía"+food.totalMoney()+"");
+            holder.tv_Title.setText(food.getTitle());
+        }
+        amount=food.getAmountBuy();
+
         holder.tv_Xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +178,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public  class  CartViewHolder extends RecyclerView.ViewHolder{
         TextView tv_Title,tv_Price,tv_Amount,tv_Xoa;
+
         ImageView img_Food,img_Plus,img_Minus;
+
+        ImageView img_Food;
+
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);

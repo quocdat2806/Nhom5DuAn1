@@ -9,12 +9,7 @@
         android:orientation="horizontal"
         android:background="@color/orange"
         android:layout_height="50dp">
-        <ImageView
-            android:id="@+id/img_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_back"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -22,7 +17,6 @@
             android:textColor="#fff"
             android:textSize="20sp"
             android:gravity="center"
-            android:layout_marginEnd="20dp"
             android:background="@color/orange"
             android:text="Liên Hệ"/>
     </LinearLayout>
@@ -42,7 +36,7 @@
         android:textSize="16sp"
         android:gravity="center"
         android:layout_marginTop="5dp"
-        android:text="Nhóm 6 Dự Án 1"/>
+        android:text="Nhóm 5 Dự Án 1"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

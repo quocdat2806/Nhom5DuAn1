@@ -56,6 +56,7 @@
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
+
                         <ImageView
 
                             android:src="@drawable/ic_minus"
@@ -63,6 +64,7 @@
                             android:layout_width="30dp"
                             android:background="@drawable/cs_bg_add_minus"
                             android:layout_height="25dp"/>
+
                         <TextView
                             android:layout_marginStart="15dp"
                             android:layout_width="30dp"
@@ -74,6 +76,7 @@
                             android:gravity="center"
                             android:background="@drawable/cs_amount"
                             android:layout_height="25dp"/>
+
                         <ImageView
                             android:id="@+id/img_plus"
                             android:layout_marginStart="15dp"
@@ -81,6 +84,7 @@
                             android:src="@drawable/ic_add"
                             android:background="@drawable/cs_bg_add_minus"
                             android:layout_height="25dp"/>
+
 
 
                     </LinearLayout>

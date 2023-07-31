@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_bottom_sheet"
@@ -70,10 +71,91 @@
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tran_parent"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:paddingBottom="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:padding="8dp"
+                    android:text="Chi Tiết Đơn Hàng"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_tong_tien_tat_ca"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textColor="@color/orange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_ten"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_so_luong"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+
                 android:text="Phương Thức Thanh Toán"/>
             <EditText
                 android:layout_marginStart="10dp"
@@ -85,10 +167,26 @@
                 android:layout_width="match_parent"
                 android:background="@drawable/cs_edittext"
                 android:layout_height="wrap_content"/>
+
+                android:text="Phương Thức Thanh Toán" />
+
+            <Spinner
+                android:id="@+id/spinner_phuong_thuc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/cs_edittext"
+                android:clickable="false"
+                android:padding="10dp"
+                android:text="Tiền Mặt" />
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+
                 android:text="Họ Và Tên (*)"/>
             <EditText
                 android:layout_marginStart="10dp"
@@ -98,10 +196,24 @@
                 android:layout_width="match_parent"
                 android:background="@drawable/cs_edittext"
                 android:layout_height="wrap_content"/>
+
+                android:text="Họ Và Tên (*)" />
+
+            <EditText
+                android:id="@+id/edt_ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/cs_edittext"
+                android:padding="10dp" />
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+
 
                 android:text="Số Điện Thoại"/>
             <EditText
@@ -112,10 +224,24 @@
                 android:layout_width="match_parent"
                 android:background="@drawable/cs_edittext"
                 android:layout_height="wrap_content"/>
+
+                android:text="Số Điện Thoại" />
+
+            <EditText
+                android:id="@+id/edt_sdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/cs_edittext"
+                android:padding="10dp" />
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+
 
                 android:text="Địa Chỉ Giao Hàng"/>
             <EditText
@@ -163,14 +289,63 @@
                     android:textColor="#fff"
                     android:layout_height="wrap_content"/>
 
+                android:text="Địa Chỉ Giao Hàng" />
+
+            <EditText
+                android:id="@+id/edt_dia_chi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/cs_edittext"
+                android:padding="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_huy_bo_sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/cs_huy_bo"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Hủy Bỏ"
+                    android:textColor="@color/black"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_dat_hang_sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/cs_them_gio_hang"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Đặt Hàng"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
             </LinearLayout>
 
 
         </LinearLayout>
 
     </ScrollView>
-
-
 
 
 
