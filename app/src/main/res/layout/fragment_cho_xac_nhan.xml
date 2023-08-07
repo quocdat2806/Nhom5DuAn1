@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E8E8E8"
     tools:context=".fragment.HistoryFramnents.ChoXacNhanFragment">
 
     <androidx.recyclerview.widget.RecyclerView

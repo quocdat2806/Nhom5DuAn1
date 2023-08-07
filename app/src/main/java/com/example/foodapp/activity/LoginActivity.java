@@ -1,5 +1,6 @@
 package com.example.foodapp.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.foodapp.MainActivity;
 import com.example.foodapp.R;
 import com.example.foodapp.database.UserDatabase;
 import com.example.foodapp.modal.User;
@@ -48,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         editor.putBoolean("login",true);
                         editor.putInt("userId",list.get(i).getId());
                         editor.apply();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                         return;
                     }

@@ -105,7 +105,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             });
 
         } else if (history.getStatus() == 2 || history.getStatus() == 3) {
-            holder.btn_chucnang.setVisibility(View.INVISIBLE);
+            holder.btn_chucnang.setVisibility(View.GONE);
 
         } else if (history.getStatus() == 4) {
             holder.btn_chucnang.setText("Đặt lại");
