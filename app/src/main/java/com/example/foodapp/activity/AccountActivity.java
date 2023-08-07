@@ -53,7 +53,7 @@ public class AccountActivity extends AppCompatActivity {
             passWord=sharedPreferences.getString("password","");
             layout_Visiable.setVisibility(View.VISIBLE);
             tv_Email.setText(email);
-            tv_Mat_Khau.setText(passWord);
+            tv_Mat_Khau.setText("*******");
             tv_Dang_Ky.setVisibility(View.GONE);
             tv_Dang_Nhap.setVisibility(View.GONE);
             tv_Chua_Co_TK.setVisibility(View.GONE);

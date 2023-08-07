@@ -42,6 +42,7 @@ public class NotifyActivity extends AppCompatActivity {
     public long diff, diffSeconds ,diffMinutes,diffHours;
     public String timeEnd;
     ImageView img_Back;
+    int day = 1;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -142,6 +143,10 @@ public class NotifyActivity extends AppCompatActivity {
          diffSeconds = diff / 1000 % 60;
          diffMinutes = diff / (60 * 1000) % 60;
          diffHours = diff / (60 * 60 * 1000);
+    }
+    public int setday(int hours) {
+        day = (int) (Math.floor(hours / 24));
+        return day;
     }
 }
 

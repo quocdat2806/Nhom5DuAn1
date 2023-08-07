@@ -107,7 +107,9 @@ public class CartFragment extends Fragment {
                             }
                             list.clear();
                             cartAdapter.notifyDataSetChanged();
-                            tv_Tong_Tien.setText("000000 VND");
+                            total = 0 ;
+
+                            tv_Tong_Tien.setText(total+"");
                             tv_Dat_Hang.setEnabled(false);
                             tv_Empty.setVisibility(View.VISIBLE);
                             tv_Dat_Hang.setBackground(getResources().getDrawable(R.drawable.cs_huy_bo));
@@ -152,7 +154,7 @@ public class CartFragment extends Fragment {
                                     total = total - food.totalMoneyDiscount();
                                 } else {
                                     total = total - food.total();}
-                                tv_Tong_Tien.setText("Tổng Tiền" + " " + total + "VND");
+                                tv_Tong_Tien.setText("Tổng Tiền :" + " " + total + "VND");
                                 if (list.isEmpty()) {
                                     tv_Empty.setVisibility(View.VISIBLE);
                                 }

@@ -70,7 +70,6 @@ public class MuaNgayActivity extends AppCompatActivity {
         img_Minus = findViewById(R.id.img_minus);
 
         phuongthucthanhtoan = findViewById(R.id.phuongthucthanhtoan_spinner);
-//        tv_Dia_Chi=findViewById(R.id.tv_dia_chi);
         tv_Gia_Tien = findViewById(R.id.tv_tong_tien_tat_ca);
         img_food = findViewById(R.id.img_food);
         tv_Dat_Hang = findViewById(R.id.tv_dat_hang_sheet);

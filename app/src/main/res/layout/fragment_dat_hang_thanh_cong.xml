@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.DatHangThanhCongFragment">
+
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_thanh_cong" />
+
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img1"
+        android:gravity="center_horizontal"
+        android:text="Đặt Hàng Thành Công"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/t2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/t1"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal"
+        android:text="Cùng FoodApp bảo vệ quyền lợi của bạn - chị
+nhận hàng và thanh toán khi đơn mua ở trạng thái đang giao hàng " />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/t2"
+        android:gravity="center_horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/quaylaitrangchu"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custome_listview"
+            android:backgroundTint="#FD7300"
+            android:text="Trang chủ" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/xemdonmua"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_toEndOf="@+id/quaylaitrangchu"
+            android:background="@drawable/custome_listview"
+            android:backgroundTint="#FD7300"
+            android:text="Xem Đơn Mua" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -121,8 +121,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Calendar cal = Calendar.getInstance();
+                            Date date = cal.getTime();
+                            SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aaa");
+                            String time;
+                            time = ("" + sdf3.format(date));
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("status", 0);
+                            hashMap.put("ngayDatHang", "" + time);
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("list history");
                             ref.child("" + history.getMaDonHang())
                                     .updateChildren(hashMap)
@@ -143,11 +149,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                             sharedPreferences = v.getContext().getSharedPreferences("info", Context.MODE_PRIVATE);
                             userId = sharedPreferences.getInt("userId", 0);
 
-                            Calendar cal = Calendar.getInstance();
-                            Date date = cal.getTime();
-                            SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aaa");
-                            String time;
-                            time = ("" + sdf3.format(date));
 
                             firebaseDatabase_Notify = FirebaseDatabase.getInstance();
                             reference_Notify = firebaseDatabase_Notify.getReference("list notify");
