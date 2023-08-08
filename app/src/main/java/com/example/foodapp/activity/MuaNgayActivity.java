@@ -31,6 +31,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MuaNgayActivity extends AppCompatActivity {
     Food food;
@@ -117,8 +119,14 @@ public class MuaNgayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getInformation();
-                Toast.makeText(MuaNgayActivity.this, "Đặt Hàng Thành Công", Toast.LENGTH_SHORT).show();
-                finish();
+                if (ten.length() == 0 || sdt.length() == 0 || diaChi.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Bạn Cần Phải Điền Đầy Đủ Thông Tin", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    Toast.makeText(MuaNgayActivity.this, "Đặt Hàng Thành Công", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
             }
         });
         tv_Huy_Bo.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +144,14 @@ public class MuaNgayActivity extends AppCompatActivity {
             Toast.makeText(this, "Bạn Cần Phải Điền Đầy Đủ Thông Tin", Toast.LENGTH_SHORT).show();
             return;
         }
+        String phoneRegex = "^(\\+?\\d{1,3}[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$";
+        Pattern pattern = Pattern.compile(phoneRegex);
+        Matcher matcher = pattern.matcher(sdt);
+        if(!matcher.matches()){
+            Toast.makeText(this, "Số điện thoại không đúng định dạng", Toast.LENGTH_SHORT).show();
+            return;
+
+        }
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aaa");
@@ -146,11 +162,6 @@ public class MuaNgayActivity extends AppCompatActivity {
         firebaseDatabase_Notify = FirebaseDatabase.getInstance();
         reference_History = firebaseDatabase_History.getReference("list history");
         reference_Notify = firebaseDatabase_Notify.getReference("list notify");
-
-
-
-
-
         food.setAmountBuy(amount);
         History history = new History("" + timestamp, ten, sdt, diaChi, food.getAmountBuy(), food.getTitle(), time, food.getPrice() * food.getAmountBuy(), phuongThuc, userId, 0);
         reference_History.child("" + timestamp).setValue(history);

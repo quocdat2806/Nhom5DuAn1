@@ -13,6 +13,13 @@ import com.example.foodapp.R;
 import com.example.foodapp.database.UserDatabase;
 import com.example.foodapp.modal.User;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import kotlin.text.Regex;
+
 public class SingUpActivity extends AppCompatActivity {
     EditText edt_Email,edt_Mat_Khau;
     TextView tv_Dang_Ky;
@@ -34,12 +41,42 @@ public class SingUpActivity extends AppCompatActivity {
                     Toast.makeText(SingUpActivity.this,"Vui Lòng Nhập Đầy Đủ Thông Tin",Toast.LENGTH_LONG).show();
                     return;
                 }
+                String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+                Pattern pattern = Pattern.compile(emailRegex);
+                Matcher matcher = pattern.matcher(email);
+                if(!matcher.matches()){
+                    Toast.makeText(SingUpActivity.this,"Không đúng định dạng email",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(matKhau.length() <6){
+                    Toast.makeText(SingUpActivity.this, "Mật khẩu không được nhỏ hơn 6 kí tự", Toast.LENGTH_SHORT).show();
+                }
+                List<User> list = UserDatabase.getInstance(getApplicationContext()).userDAO().getList();
+                if(list.size()!=0){
+                    for(User user :list) {
+                        if(user.getEmail().equals(email)){
+                            Toast.makeText(SingUpActivity.this,"Email đã tồn tại",Toast.LENGTH_LONG).show();
+                            break;
+                        }
+                        else{
+                            Toast.makeText(SingUpActivity.this,"Đăng Ký Tài Khoản Thành Công",Toast.LENGTH_LONG).show();
+                            edt_Email.setText("");
+                            edt_Mat_Khau.setText("");
+                            User user1=new User(email,matKhau);
+                            UserDatabase.getInstance(getApplicationContext()).userDAO().insert(user1);
 
-                Toast.makeText(SingUpActivity.this,"Đăng Ký Tài Khoản Thành Công",Toast.LENGTH_LONG).show();
-                edt_Email.setText("");
-                edt_Mat_Khau.setText("");
-                User user=new User(email,matKhau);
-                UserDatabase.getInstance(getApplicationContext()).userDAO().insert(user);
+                        }
+                    }
+
+                }else {
+                    Toast.makeText(SingUpActivity.this,"Đăng Ký Tài Khoản Thành Công",Toast.LENGTH_LONG).show();
+                    edt_Email.setText("");
+                    edt_Mat_Khau.setText("");
+                    User user1=new User(email,matKhau);
+                    UserDatabase.getInstance(getApplicationContext()).userDAO().insert(user1);
+
+                }
+
             }
         });
         img_back.setOnClickListener(new View.OnClickListener() {

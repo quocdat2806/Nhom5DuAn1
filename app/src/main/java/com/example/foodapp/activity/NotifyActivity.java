@@ -43,6 +43,7 @@ public class NotifyActivity extends AppCompatActivity {
     public String timeEnd;
     ImageView img_Back;
     int day = 1;
+    Boolean isLogin = false;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -66,49 +67,7 @@ public class NotifyActivity extends AppCompatActivity {
         if(list.size()==0){
             tv_Empty.setVisibility(View.VISIBLE);
         }
-        reference=firebaseDatabase.getReference("list notify");
-        reference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Notify notify = snapshot.getValue(Notify.class);
 
-                if (notify == null || list == null || notifyAdapter == null) {
-                    return;
-                }
-                if(userIdd==(notify.getUserId())){
-                    list.add(0, notify);
-                }else {
-                    return;
-                }
-                if(list.size()>0){
-                    tv_Empty.setVisibility(View.GONE);
-
-                }else {
-                    tv_Empty.setVisibility(View.VISIBLE);
-                }
-                notifyAdapter.setData(list);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
     }
@@ -118,6 +77,53 @@ public class NotifyActivity extends AppCompatActivity {
         super.onStart();
         sharedPreferences=getSharedPreferences("info",MODE_PRIVATE);
         userIdd=sharedPreferences.getInt("userId",0);
+        isLogin = sharedPreferences.getBoolean("login",false);
+        if(isLogin){
+            reference=firebaseDatabase.getReference("list notify");
+            reference.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Notify notify = snapshot.getValue(Notify.class);
+
+                    if (notify == null || list == null || notifyAdapter == null) {
+                        return;
+                    }
+                    if(userIdd==(notify.getUserId())){
+                        list.add(0, notify);
+                    }else {
+                        return;
+                    }
+                    if(list.size()>0){
+                        tv_Empty.setVisibility(View.GONE);
+
+                    }else {
+                        tv_Empty.setVisibility(View.VISIBLE);
+                    }
+                    notifyAdapter.setData(list);
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
     }
 
     public void handlerTimes(String timeStart){
