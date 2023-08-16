@@ -1,6 +1,7 @@
 package com.example.foodapp.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +14,8 @@ import com.example.foodapp.R;
 import com.example.foodapp.database.UserDatabase;
 import com.example.foodapp.modal.User;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -62,7 +65,8 @@ public class SingUpActivity extends AppCompatActivity {
                             Toast.makeText(SingUpActivity.this,"Đăng Ký Tài Khoản Thành Công",Toast.LENGTH_LONG).show();
                             edt_Email.setText("");
                             edt_Mat_Khau.setText("");
-                            User user1=new User(email,matKhau);
+                            User user1=new User(email,md5(matKhau));
+                            Log.d("mahoa", "dang ky 1 "+md5(matKhau));
                             UserDatabase.getInstance(getApplicationContext()).userDAO().insert(user1);
 
                         }
@@ -72,7 +76,8 @@ public class SingUpActivity extends AppCompatActivity {
                     Toast.makeText(SingUpActivity.this,"Đăng Ký Tài Khoản Thành Công",Toast.LENGTH_LONG).show();
                     edt_Email.setText("");
                     edt_Mat_Khau.setText("");
-                    User user1=new User(email,matKhau);
+                    User user1=new User(email,md5(matKhau));
+                    Log.d("mahoa", "dang ky 2 "+md5(matKhau));
                     UserDatabase.getInstance(getApplicationContext()).userDAO().insert(user1);
 
                 }
@@ -95,5 +100,29 @@ public class SingUpActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         finish();
+    }
+    public static String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
