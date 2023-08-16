@@ -63,13 +63,13 @@ public class CartFragment extends Fragment {
     Spinner spinner_phtt;
     String phuongThuc, ten, sdt, diaChi;
     ImageView img_Back;
+    Boolean isLogin = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cart_fragment, container, false);
         unitUi(view);
         checkData();
-        loadData();
         tv_Dat_Hang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,7 +239,10 @@ public class CartFragment extends Fragment {
         super.onStart();
         sharedPreferences = getActivity().getSharedPreferences("info", getActivity().MODE_PRIVATE);
         userId = sharedPreferences.getInt("userId", 0);
-
+        isLogin = sharedPreferences.getBoolean("login",false);
+        if(isLogin){
+            loadData();
+        }
     }
 
     private void loadData() {

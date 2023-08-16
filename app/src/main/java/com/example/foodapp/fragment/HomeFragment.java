@@ -101,20 +101,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 String strKey = s.toString().trim();
                 if (strKey.equals("") || strKey.length() == 0) {
                     list.clear();
-                    if (tv_Tat_Ca.isFocusable()) {
-                        getListFoods("");
-
-                    } else if (tv_Tra_Sua.isFocusable()) {
-                        getListFoods("tra");
-
-                    } else if (tv_Banh_Mi.isFocusable()) {
-                        getListFoods("banh");
-
-                    } else {
-                        getListFoods("pizza");
-                    }
-
-
+                    getListFoods(s.toString());
                 }
             }
         });
@@ -178,7 +165,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (tv_Tra_Sua.isFocusable()) {
                 tv_Tra_Sua.setBackground(getResources().getDrawable(R.drawable.cs_category_checked));
             }
-            getListFoods("Trà ");
+            getListFoods("Trà");
         } else if (id == R.id.tv_pizza) {
             tv_Tat_Ca.setFocusable(false);
             tv_Banh_Mi.setFocusable(false);
@@ -193,7 +180,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (tv_Pizza.isFocusable()) {
                 tv_Pizza.setBackground(getResources().getDrawable(R.drawable.cs_category_checked));
             }
-            getListFoods("pizza");
+            getListFoods("Pizza");
 
         } else if (id == R.id.tv_banh_mi) {
             tv_Tat_Ca.setFocusable(false);
@@ -209,7 +196,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (tv_Banh_Mi.isFocusable()) {
                 tv_Banh_Mi.setBackground(getResources().getDrawable(R.drawable.cs_category_checked));
             }
-            getListFoods("bánh");
+            getListFoods("Bánh");
 
         } else if (id == R.id.img_notifycation) {
             startActivity(new Intent(getActivity(), NotifyActivity.class));
@@ -222,8 +209,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getListFoods(String key) {
-
-//        lấy dữ liệu từ trên server
         list.clear();
         MyApplication.get(getActivity()).getDatabaseReference()
                 .addChildEventListener(new ChildEventListener() {
