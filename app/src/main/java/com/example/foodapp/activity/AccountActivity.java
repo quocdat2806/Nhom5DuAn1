@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foodapp.R;
+import com.example.foodapp.fragment.CartFragment;
 
 
 public class AccountActivity extends AppCompatActivity {
@@ -72,6 +73,7 @@ public class AccountActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     editor.putBoolean("login",false);
                                     editor.apply();
+                                    CartFragment.total = 0;
                                     startActivity(new Intent(AccountActivity.this,ActivityIntro.class));
                                     finish();
                                 }

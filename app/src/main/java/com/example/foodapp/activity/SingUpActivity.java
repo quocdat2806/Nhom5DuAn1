@@ -53,6 +53,7 @@ public class SingUpActivity extends AppCompatActivity {
                 }
                 if(matKhau.length() <6){
                     Toast.makeText(SingUpActivity.this, "Mật khẩu không được nhỏ hơn 6 kí tự", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 List<User> list = UserDatabase.getInstance(getApplicationContext()).userDAO().getList();
                 if(list.size()!=0){

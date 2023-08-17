@@ -3,6 +3,7 @@ package com.example.foodapp.fragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CartFragment extends Fragment {
 
@@ -70,6 +73,12 @@ public class CartFragment extends Fragment {
         View view = inflater.inflate(R.layout.cart_fragment, container, false);
         unitUi(view);
         checkData();
+        sharedPreferences = getActivity().getSharedPreferences("info", getActivity().MODE_PRIVATE);
+        userId = sharedPreferences.getInt("userId", 0);
+        isLogin = sharedPreferences.getBoolean("login",false);
+            if(isLogin){
+                loadData();
+            }
         tv_Dat_Hang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,9 +102,16 @@ public class CartFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             getData();
-                            if (sdt.length() == 0 || diaChi.length() == 0) {
+                            if (sdt.length() == 0 || diaChi.length() == 0 || ten.isEmpty()) {
                                 Toast.makeText(getActivity(), "Vui Lòng Nhập Đầy Đủ Thông Tin", Toast.LENGTH_SHORT).show();
                                 return;
+                            }
+                            String phoneRegex = "^(\\+?\\d{1,3}[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$";
+                            Pattern pattern = Pattern.compile(phoneRegex);
+                            Matcher matcher = pattern.matcher(sdt);
+                            if(!matcher.matches()){
+                                Toast.makeText(getContext(), "Số điện thoại không đúng định dạng", Toast.LENGTH_SHORT).show();
+                                return ;
                             }
                             firebaseDatabase_History = FirebaseDatabase.getInstance();
                             reference_History = firebaseDatabase_History.getReference("list history");getInformation();
@@ -206,43 +222,36 @@ public class CartFragment extends Fragment {
     private void getData() {
         phuongThuc = (String) spinner_phtt.getSelectedItem();
         ten = edt_Ten.getText().toString().trim();
-        sdt = edt_Sdt.getText().toString().trim();diaChi = edt_Dia_Chi.getText().toString().trim();
+        sdt = edt_Sdt.getText().toString().trim();
+        diaChi = edt_Dia_Chi.getText().toString().trim();
     }
 
     @Override
     public void onStop() {
         super.onStop();
     }
-
     private void getInformation() {
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aaa");
         String time;
         time = ("" + sdf3.format(date));
-
         for (int i = 0; i < list.size(); i++) {
             long timestamp = System.currentTimeMillis();
             firebaseDatabase_Notify = FirebaseDatabase.getInstance();
             reference_Notify = firebaseDatabase_Notify.getReference("list notify");
             History history = new History("" + timestamp, ten, sdt, diaChi, list.get(i).getAmountBuy(), list.get(i).getTitle(), time, list.get(i).getPrice() * list.get(i).getAmountBuy(), phuongThuc, userId, 0);
             reference_History.child("" + timestamp).setValue(history);
-
             Notify notify = new Notify("" + timestamp, "Bạn vừa đặt hàng" + " " + list.get(i).getTitle(), time, userId);
             reference_Notify.child("" + timestamp).setValue(notify);
-
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        sharedPreferences = getActivity().getSharedPreferences("info", getActivity().MODE_PRIVATE);
-        userId = sharedPreferences.getInt("userId", 0);
-        isLogin = sharedPreferences.getBoolean("login",false);
-        if(isLogin){
-            loadData();
-        }
+
+
     }
 
     private void loadData() {
@@ -267,6 +276,8 @@ public class CartFragment extends Fragment {
                     tv_Dat_Hang.setBackground(getResources().getDrawable(R.drawable.cs_them_gio_hang));
                     tv_Empty.setVisibility(View.GONE);
                     cartAdapter.setData(list);
+                    Log.d("LIST",list.toString());
+                    cartAdapter.notifyDataSetChanged();
                 }
             }
 

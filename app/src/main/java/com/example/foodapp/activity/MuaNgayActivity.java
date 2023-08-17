@@ -52,8 +52,6 @@ public class MuaNgayActivity extends AppCompatActivity {
     ImageView img_Plus, img_Minus;
     int amount = 1;
     int total = 0;
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,14 +116,12 @@ public class MuaNgayActivity extends AppCompatActivity {
         tv_Dat_Hang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getInformation();
-                if (ten.length() == 0 || sdt.length() == 0 || diaChi.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Bạn Cần Phải Điền Đầy Đủ Thông Tin", Toast.LENGTH_SHORT).show();
-                    return;
-                }else {
+                Boolean check = getInformation();
+                if(check){
                     Toast.makeText(MuaNgayActivity.this, "Đặt Hàng Thành Công", Toast.LENGTH_SHORT).show();
                     finish();
                 }
+
 
             }
         });
@@ -138,19 +134,18 @@ public class MuaNgayActivity extends AppCompatActivity {
 
     }
 
-    private void getInformation() {
+    private boolean getInformation() {
         getData();
         if (ten.length() == 0 || sdt.length() == 0 || diaChi.length() == 0) {
             Toast.makeText(this, "Bạn Cần Phải Điền Đầy Đủ Thông Tin", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
         String phoneRegex = "^(\\+?\\d{1,3}[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$";
         Pattern pattern = Pattern.compile(phoneRegex);
         Matcher matcher = pattern.matcher(sdt);
         if(!matcher.matches()){
             Toast.makeText(this, "Số điện thoại không đúng định dạng", Toast.LENGTH_SHORT).show();
-            return;
-
+            return false;
         }
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
@@ -168,6 +163,7 @@ public class MuaNgayActivity extends AppCompatActivity {
         Notify notify = new Notify("" + timestamp, "Bạn vừa đặt hàng" + " " + food.getTitle(), time, userId);
 
         reference_Notify.child("" + timestamp).setValue(notify);
+        return  true;
 
     }
 
