@@ -72,6 +72,8 @@ public class DangGiaoFragment extends Fragment {
         tv_Empty=view.findViewById(R.id.tv_empty_dang_gh);
         if(list.isEmpty()){
             tv_Empty.setVisibility(View.VISIBLE);
+        }else {
+            tv_Empty.setVisibility(View.GONE);
         }
 
         rcv_History.setAdapter(historyAdapter);
@@ -91,12 +93,12 @@ public class DangGiaoFragment extends Fragment {
         super.onResume();
         list.clear();
 
+
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                 History userId = snapshot.getValue(History.class);
-                if (userId == null || list == null || historyAdapter == null) {
+                if (userId == null|| list == null || historyAdapter == null) {
                     return;
                 }
                 if(userIdd==(userId.getUserId()) && userId.getStatus()==2){
@@ -130,5 +132,14 @@ public class DangGiaoFragment extends Fragment {
 
             }
         });
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        historyAdapter.notifyDataSetChanged();
+        historyAdapter.setData(list);
+        if(list.isEmpty()){
+            tv_Empty.setVisibility(View.VISIBLE);
+        }
     }
 }

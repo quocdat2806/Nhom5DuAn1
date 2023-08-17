@@ -76,6 +76,8 @@ public class DaHuyFragment extends Fragment {
         tv_Empty=view.findViewById(R.id.tv_empty_da_huy);
         if(list.isEmpty()){
             tv_Empty.setVisibility(View.VISIBLE);
+        }else {
+            tv_Empty.setVisibility(View.GONE);
         }
 
         rcv_History.setAdapter(historyAdapter);
@@ -93,12 +95,13 @@ public class DaHuyFragment extends Fragment {
     public void onResume() {
         super.onResume();
         list.clear();
+
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 History userId = snapshot.getValue(History.class);
-                if (userId == null || list == null || historyAdapter == null) {
+                if (userId == null|| list == null || historyAdapter == null) {
                     return;
                 }
                 if(userIdd==(userId.getUserId()) && userId.getStatus()==4){
@@ -132,5 +135,14 @@ public class DaHuyFragment extends Fragment {
 
             }
         });
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        historyAdapter.notifyDataSetChanged();
+        historyAdapter.setData(list);
+        if(list.isEmpty()){
+            tv_Empty.setVisibility(View.VISIBLE);
+        }
     }
 }
